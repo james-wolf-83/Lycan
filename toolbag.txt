@@ -1,0 +1,37 @@
+Docker cmd's:
+    # Log into the DB shell directly
+    docker exec -it lycan_postgres psql -U jwolf -d lycan_db
+
+PSQL cmd's (Run these inside the psql prompt):
+    \dt          # List all tables (Check if 'vector_store' exists)
+    \d+ <table_name> # Describe table structure (See columns/types)
+    \q          # Quit psql
+
+SQL cmd's (The "Lycan Audit" queries):
+    # See where the mystery files came from
+    SELECT DISTINCT metadata->>'source' FROM vector_store;
+
+    # See how many "chunks" were created per file
+    SELECT metadata->>'source', COUNT(*) FROM vector_store GROUP BY 1;
+
+    # Check the total 'memory' size (row count)
+    SELECT COUNT(*) FROM vector_store;
+
+    # Peek at the actual text content
+    SELECT content FROM vector_store LIMIT 5;
+
+Bash / Other Shwifty Things:
+    # Check if Ollama has the brains loaded
+    ollama list #Local
+    docker exec -it lycan_ollama ollama list #Docker Container
+
+Shwifty Stuff:
+
+    # Wipe the vector store without dropping the table (Nuclear Option)
+    DELETE FROM vector_store;
+
+    # The "Forget one file" command (Surgical Option)
+    DELETE FROM vector_store WHERE metadata->>'source' LIKE '%filename_to_forget%';
+
+    # Monitor GPU usage in WSL to see Ollama working
+    watch -n 0.5 nvidia-smi

@@ -1,0 +1,49 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-setup-pgvector
+      author: jwolf
+      changes:
+        - sql:
+            sql: CREATE EXTENSION IF NOT EXISTS vector;
+
+  - changeSet:
+      id: 002-create-indexed-files
+      author: jwolf
+      changes:
+        - createTable:
+            tableName: indexed_files
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: file_name
+                  type: VARCHAR(255)
+              - column:
+                  name: file_path
+                  type: VARCHAR(1024)
+                  constraints:
+                    unique: true
+                    nullable: false
+              - column:
+                  name: file_size
+                  type: BIGINT
+              - column:
+                  name: indexed_at
+                  type: TIMESTAMP
+
+  - changeSet:
+      id: 003-add-embedded-flag
+      author: jwolf
+      changes:
+        - addColumn:
+            tableName: indexed_files
+            columns:
+              - column:
+                  name: is_embedded
+                  type: BOOLEAN
+                  defaultValueBoolean: false

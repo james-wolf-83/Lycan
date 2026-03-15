@@ -1,0 +1,26 @@
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    container_name: lycan_postgres
+    restart: always
+    environment:
+      POSTGRES_USER: jwolf
+      POSTGRES_PASSWORD: password123
+      POSTGRES_DB: lycan_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+  
+  ollama:
+    image: ollama/ollama
+    container_name: lycan_ollama
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  postgres_data:
+  ollama_data: #New volume to store AI models
