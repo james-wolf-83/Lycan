@@ -25,6 +25,22 @@ Bash / Other Shwifty Things:
     ollama list #Local
     docker exec -it lycan_ollama ollama list #Docker Container
 
+Git
+    # Initialize git in Parent directory
+    git Init
+
+    #Grab everything (respecting .gitignore)
+    git add .
+
+    #Commit
+    git commit -m "commit message"
+
+    #Point to existing GitHub
+    git remote add origin https://github.com/jwolf/lycan.git
+    #Overwrite the 'old one' with the new 'if applicable'
+    git branch -M main
+    git push -u origin main --force
+
 Shwifty Stuff:
 
     # Wipe the vector store without dropping the table (Nuclear Option)
