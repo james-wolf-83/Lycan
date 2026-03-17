@@ -1,205 +1,74 @@
-# Lycan
+# 🚀 Lycan  
+**Local-First AI Asset Intelligence Engine**
 
-**AI-Native Asset Intelligence Engine**
+Lycan is an on-premise AI system that transforms raw files into a **queryable knowledge layer** using vector search and local LLM inference.
 
-Lycan is an on-premise **AI-powered asset intelligence system** that transforms raw file storage into a **semantic knowledge base**.
-
-Built with modern Java and vector search technology, Lycan ingests documents, generates embeddings, and enables natural-language querying through a REST API and interactive web interface.
-
-Instead of relying on filenames or folder structures, Lycan allows users to ask questions about their data and retrieve answers grounded in the actual document contents.
+It is designed as a **deterministic data pipeline**, where documents are ingested, chunked, embedded, and stored for semantic retrieval — enabling natural-language interaction with local data.
 
 ---
 
-# Core Capabilities
+## 🧠 What I Built
 
-## Semantic Asset Discovery
+Lycan is not just a chatbot — it is a **retrieval-backed intelligence system**:
 
-Lycan uses vector embeddings to perform semantic search across ingested files.
-
-Users can retrieve relevant documents using natural language queries such as:
-
-```
-"Show me the contract about the office lease"
-```
-
-—even if the document name is unrelated.
+- Ingests local files and converts them into vector embeddings  
+- Stores document chunks in PostgreSQL (pgvector)  
+- Retrieves relevant context based on semantic similarity  
+- Generates grounded answers using a local LLM (Ollama)  
+- Exposes the system through a REST API and web interface  
 
 ---
 
-## Retrieval-Augmented Generation (RAG)
+## ⚙️ System Design
 
-Lycan combines vector search with large language models to produce **context-aware answers**.
-
-The system workflow:
-
-1. Retrieve the most relevant document fragments from the vector store.
-2. Inject those fragments into the LLM prompt.
-3. Generate a grounded response using the retrieved context.
-
-This enables users to interact with their data as a **question-answering knowledge system**.
+### 🔹 Ingestion Pipeline
+- Reads files from disk and converts them into structured documents  
+- Uses token-based chunking for consistent segmentation  
+- Attaches metadata (source path, chunk index) for traceability  
+- Designed for **idempotent processing** (deterministic chunking + planned deduplication)
 
 ---
 
-## Hardware-Aware Retrieval Engine
+### 🔹 Retrieval-Augmented Generation (RAG)
 
-Lycan dynamically adjusts retrieval depth based on system resources.
+Lycan uses a standard RAG pipeline:
 
-The **Hardware Aware Algorithm (HAA)** monitors available memory and determines how many document vectors should be retrieved.
+1. Retrieve relevant document chunks from the vector store  
+2. Inject context into the LLM prompt  
+3. Generate a grounded response  
 
-| System Profile | Top-K Retrieval |
-| -------------- | --------------- |
-| Low Memory     | 2               |
-| Standard       | 5               |
-| High Memory    | 10              |
-
-This keeps the system efficient across different machines while maintaining relevant search results.
+This allows users to query their data without relying on filenames or folder structure.
 
 ---
 
-## REST API Interface
+### 🔹 Hardware-Aware Retrieval
 
-Lycan exposes a simple REST API for querying the system.
+Lycan dynamically adjusts retrieval size based on system resources:
 
-Example request:
+| Profile       | Top-K |
+|--------------|------|
+| Low Memory   | 2    |
+| Standard     | 5    |
+| High Memory  | 10   |
 
-```
+This keeps inference efficient across different machines.
+
+---
+
+### 🔹 Local-First Architecture
+
+- Runs fully on local infrastructure  
+- Uses Docker for PostgreSQL + pgvector  
+- Uses Ollama for local LLM inference  
+- No external API dependency  
+
+---
+
+## 🌐 API Example
+
+```json
 POST /api/v1/ask
-```
 
-```
 {
   "query": "Explain the Lycan architecture"
 }
-```
-
-Example response:
-
-```
-{
-  "answer": "Lycan is an AI-native asset intelligence engine that combines vector search and LLM orchestration..."
-}
-```
-
----
-
-## Interactive Web Console
-
-Lycan includes a browser-based console that allows users to interact with the system conversationally.
-
-Features include:
-
-* Natural language querying
-* Chat-style interface
-* Real-time responses from the AI engine
-* System telemetry and status monitoring
-
----
-
-# Technical Architecture
-
-## Engine
-
-* Java 21
-* Multi-threaded ingestion pipeline
-* High-performance file scanning
-
-## AI Layer
-
-* Spring AI orchestration
-* Local LLM inference via Ollama
-* Semantic retrieval using pgvector
-
-## Data Layer
-
-* PostgreSQL vector storage
-* JPA / Hibernate persistence
-* HikariCP connection pooling
-
-## Infrastructure
-
-* Dockerized services
-* Local LLM execution
-* On-premise deployment capability
-
----
-
-# Example Workflow
-
-```
-User Query
-    │
-    ▼
-REST API
-    │
-    ▼
-Vector Retrieval (pgvector)
-    │
-    ▼
-Relevant Document Context
-    │
-    ▼
-LLM Generation
-    │
-    ▼
-Grounded Response
-```
-
----
-
-# Running Lycan
-
-Start infrastructure:
-
-```
-docker compose up
-```
-
-Run the application:
-
-```
-mvn spring-boot:run
-```
-
-Open the web interface:
-
-```
-http://localhost:8080/lycan.html
-```
-
----
-
-# Project Status
-
-Current development focuses on expanding Lycan into a full **AI-powered asset intelligence platform**.
-
----
-
-# Roadmap
-
-## Completed
-
-* Multi-threaded ingestion pipeline
-* PostgreSQL persistence layer
-* Vector storage with pgvector
-* Spring AI RAG pipeline
-* REST API interface
-* Web-based chat console
-
-## In Progress
-
-* Hardware-aware retrieval tuning
-* Streaming LLM responses
-* Live system telemetry and log viewing
-
-## Planned
-
-* Advanced document ingestion pipeline
-* Metadata enrichment using LLMs
-* Visual RAG debugging interface
-* Enterprise deployment profiles
-
----
-
-# Vision
-
-Lycan bridges traditional infrastructure engineering with modern AI systems, enabling organizations to transform static storage into an intelligent, queryable knowledge platform.
