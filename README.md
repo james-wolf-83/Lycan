@@ -1,4 +1,4 @@
-# 🚀 Lycan  
+# Lycan  
 **Local-First AI Asset Intelligence Engine**
 
 Lycan is an on-premise AI system that transforms raw files into a **queryable knowledge layer** using vector search and local LLM inference.
@@ -7,9 +7,9 @@ It is designed as a **deterministic data pipeline**, where documents are ingeste
 
 ---
 
-## 🧠 What I Built
+## What I Built
 
-Lycan is not just a chatbot — it is a **retrieval-backed intelligence system**:
+Lycan is not just a chatbot, it is a **retrieval-backed intelligence system**:
 
 - Ingests local files and converts them into vector embeddings  
 - Stores document chunks in PostgreSQL (pgvector)  
@@ -19,9 +19,9 @@ Lycan is not just a chatbot — it is a **retrieval-backed intelligence system**
 
 ---
 
-## ⚙️ System Design
+## System Design
 
-### 🔹 Ingestion Pipeline
+### Ingestion Pipeline
 - Reads files from disk and converts them into structured documents  
 - Uses token-based chunking for consistent segmentation  
 - Attaches metadata (source path, chunk index) for traceability  
@@ -29,7 +29,7 @@ Lycan is not just a chatbot — it is a **retrieval-backed intelligence system**
 
 ---
 
-### 🔹 Retrieval-Augmented Generation (RAG)
+### Retrieval-Augmented Generation (RAG)
 
 Lycan uses a standard RAG pipeline:
 
@@ -41,7 +41,7 @@ This allows users to query their data without relying on filenames or folder str
 
 ---
 
-### 🔹 Hardware-Aware Retrieval
+### Hardware-Aware Retrieval
 
 Lycan dynamically adjusts retrieval size based on system resources:
 
@@ -55,7 +55,7 @@ This keeps inference efficient across different machines.
 
 ---
 
-### 🔹 Local-First Architecture
+### Local-First Architecture
 
 - Runs fully on local infrastructure  
 - Uses Docker for PostgreSQL + pgvector  
@@ -64,7 +64,7 @@ This keeps inference efficient across different machines.
 
 ---
 
-## 🌐 API Example
+## API Example
 
 ```json
 POST /api/v1/ask
