@@ -3,7 +3,7 @@
 
 Lycan is an on-premise AI system that transforms raw files into a **queryable knowledge layer** using vector search and local LLM inference.
 
-It is designed as a **deterministic data pipeline**, where documents are ingested, chunked, embedded, and stored for semantic retrieval — enabling natural-language interaction with local data.
+It is designed as a **deterministic data pipeline**, where documents are ingested, chunked, embedded, and stored for semantic retrieval, enabling natural-language interaction with local data.
 
 ---
 
